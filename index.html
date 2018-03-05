@@ -1,1 +1,524 @@
-"Hello World" 
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="assets/vendor/css/bootstrap.min.css">
+        <!-- Material Design Bootstrap -->
+        <!-- <link rel="stylesheet" href="assets/vendor/css/mdb.min.css"> -->
+
+        <title>Atlyginimo skaičiuoklė</title>
+    </head>
+    <body class="bg-light">
+        <div class="container">
+            <div class="py-3 text-center">
+                <h2>Darbo užmokesčio skaičiuoklė (2018)</h2>
+                <!-- <p class="lead">Below is an example form built entirely with Bootstrap's form controls.</p> -->
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <!-- Nav tabs -->
+                    <nav class="nav nav-tabs nav-fill card-header-tabs" role="tablist">
+                        <a class="nav-item nav-link active" id="neto-tab" data-toggle="tab" href="#neto" role="tab" aria-controls="neto" aria-selected="true">Algos skaičiavimas "į rankas"</a>
+                        <a class="nav-item nav-link" id="bruto-tab" data-toggle="tab" href="#bruto" role="tab" aria-controls="bruto" aria-selected="false">Algos skaičiavimas "ant popieriaus"</a>
+                        <a class="nav-item nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">Nustatymai</a>
+                    </nav>
+                </div>
+                <div class="card-body">
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+
+                        <div class="tab-pane fade show active" id="neto" role="tabpanel" aria-labelledby="neto-tab">
+                            <div class="form-group row">
+                                <label class="col-sm-8 col-form-label">Užmokestis "ant popieriaus"</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control js-grossPayAmount" placeholder="">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">&euro;</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-8">Apdraustas pas kitą draudėją<small class="form-text text-muted">Aktualu tik tuo atveju, jei mokama mažesnis nei minimalus darbo užmokestis. Asmuo laikomas draustas pas kitą draudėją tais atvejais, jei dirba kitoje darbovietėje, gavo pensiją, ar jo amžius iki 24 metų.</small></div>
+                                <div class="col-sm-4">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input js-insuredElsewhere" id="neto-insuredElsewhere" type="checkbox">
+                                        <label class="custom-control-label" for="neto-insuredElsewhere"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-8">Terminuota darbo sutartis</div>
+                                <div class="col-sm-4">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input js-fixedTermContract" id="neto-fixedTermContract" type="checkbox">
+                                        <label class="custom-control-label" for="neto-fixedTermContract"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-8">II-pakopos pensijos kaupimas (2%)</div>
+                                <div class="col-sm-4">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input js-tier2PensionAccumulation" id="neto-tier2PensionAccumulation" type="checkbox">
+                                        <label class="custom-control-label" for="neto-tier2PensionAccumulation"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <fieldset class="form-group">
+                                <div class="row">
+                                    <legend class="col-form-label col-sm-8 pt-0">Speciali darbingumo grupė</legend>
+                                    <div class="col-sm-4">
+                                        <div class="custom-control custom-radio">
+                                            <input class="custom-control-input" type="radio" name="neto-workCapacityGroup" id="neto-workCapacityGroup1" value="100" checked>
+                                            <label class="custom-control-label" for="neto-workCapacityGroup1">Ne (100%)</label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <input class="custom-control-input" type="radio" name="neto-workCapacityGroup" id="neto-workCapacityGroup2" value="55">
+                                            <label class="custom-control-label" for="neto-workCapacityGroup2">30%-55%</label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <input class="custom-control-input" type="radio" name="neto-workCapacityGroup" id="neto-workCapacityGroup3" value="25">
+                                            <label class="custom-control-label" for="neto-workCapacityGroup3">0%-25%</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <hr>
+                            <div class="form-group row">
+                                <div class="col-sm-8">Įtraukti autorinių sutarčių pajamas</div>
+                                <div class="col-sm-4">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input js-calculateAuthorContractsTaxes" id="neto-calculateAuthorContractsTaxes" type="checkbox">
+                                        <label class="custom-control-label" for="neto-calculateAuthorContractsTaxes"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="js-calculateAuthorContractsTaxesContainer" style="display: none">
+                                <div class="form-group row">
+                                    <label class="col-sm-8 col-form-label">Užmokestis "ant popieriaus"</label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control js-grossPayAmountAuthor" placeholder="">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">&euro;</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-8">Dirbantis autorius<small class="form-text text-muted">Autorius laikomas dirbančiu, jeigu yra susijęs darbo santykiais su tuo pačiu darbdaviu su kuriuo sudaroma autorinė sutartis.</small></div>
+                                    <div class="col-sm-4">
+                                        <div class="custom-control custom-checkbox">
+                                            <input class="custom-control-input js-workingAuthor" id="neto-workingAuthor" type="checkbox">
+                                            <label class="custom-control-label" for="neto-workingAuthor"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <h4>Darbuotojo ir/arba Autoriaus mokesčiai</h4>
+                            <table class="table js-employeeTaxes">
+                                <tbody>
+                                    <tr>
+                                        <td>Neapmokestinamas pajamų dydis (NPD)</td>
+                                        <td class="text-right js-taxExemptIncome"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Gyventojų pajamų mokestis (GPM)</td>
+                                        <td class="text-right js-incomeTax"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Privalomasis sveikatos draudimas (PSD)</td>
+                                        <td class="text-right js-healthInsuranceTax"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Valstybinis socialinis draudimas (VSD)</td>
+                                        <td class="text-right js-socialInsuranceTax"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>II pakopos pensijų fondas</td>
+                                        <td class="text-right js-tier2PensionTax"></td>
+                                    </tr>
+                                    <tr class="table-primary">
+                                        <td>Išmokamas atlyginimas "į rankas"</td>
+                                        <td class="text-right js-netPayAmount"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h4>Darbdavio ir/arba Užsakovo mokesčiai</h4>
+                            <table class="table js-employerTaxes">
+                                <tbody>
+                                    <tr>
+                                        <td>Sodra. (VSD + PSD)</td>
+                                        <td class="text-right js-socialAndHealthInsuranceTax"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Įmokos į garantinį fondą</td>
+                                        <td class="text-right js-guaranteeFundTax"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Įmoka į ilgalaikio darbo išmokų fondą</td>
+                                        <td class="text-right js-longTermUnemploymentFundTax"></td>
+                                    </tr>
+                                    <tr class="table-primary">
+                                        <td>Visa darbo vietos kaina</td>
+                                        <td class="text-right js-totalPayAmount"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="tab-pane fade" id="bruto" role="tabpanel" aria-labelledby="bruto-tab">
+                            <div class="form-group row">
+                                <label class="col-sm-8 col-form-label">Užmokestis "į rankas"</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control js-netPayAmount" placeholder="">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">&euro;</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-8">Apdraustas pas kitą draudėją<small class="form-text text-muted">Aktualu tik tuo atveju, jei mokama mažesnis nei minimalus darbo užmokestis. Asmuo laikomas draustas pas kitą draudėją tais atvejais, jei dirba kitoje darbovietėje, gavo pensiją, ar jo amžius iki 24 metų.</small></div>
+                                <div class="col-sm-4">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input js-insuredElsewhere" id="bruto-insuredElsewhere" type="checkbox">
+                                        <label class="custom-control-label" for="bruto-insuredElsewhere"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-8">Terminuota darbo sutartis</div>
+                                <div class="col-sm-4">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input js-fixedTermContract" id="bruto-fixedTermContract" type="checkbox">
+                                        <label class="custom-control-label" for="bruto-fixedTermContract"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-8">II-pakopos pensijos kaupimas (2%)</div>
+                                <div class="col-sm-4">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input js-tier2PensionAccumulation" id="bruto-tier2PensionAccumulation" type="checkbox">
+                                        <label class="custom-control-label" for="bruto-tier2PensionAccumulation"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <fieldset class="form-group">
+                                <div class="row">
+                                    <legend class="col-form-label col-sm-8 pt-0">Speciali darbingumo grupė</legend>
+                                    <div class="col-sm-4">
+                                        <div class="custom-control custom-radio">
+                                            <input class="custom-control-input" type="radio" name="bruto-workCapacityGroup" id="bruto-workCapacityGroup1" value="100" checked>
+                                            <label class="custom-control-label" for="bruto-workCapacityGroup1">Ne (100%)</label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <input class="custom-control-input" type="radio" name="bruto-workCapacityGroup" id="bruto-workCapacityGroup2" value="55">
+                                            <label class="custom-control-label" for="bruto-workCapacityGroup2">30%-55%</label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <input class="custom-control-input" type="radio" name="bruto-workCapacityGroup" id="bruto-workCapacityGroup3" value="25">
+                                            <label class="custom-control-label" for="bruto-workCapacityGroup3">0%-25%</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <hr>
+                            <div class="form-group row">
+                                <div class="col-sm-8">Įtraukti autorinių sutarčių pajamas</div>
+                                <div class="col-sm-4">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input js-calculateAuthorContractsTaxes" id="bruto-calculateAuthorContractsTaxes" type="checkbox">
+                                        <label class="custom-control-label" for="bruto-calculateAuthorContractsTaxes"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="js-calculateAuthorContractsTaxesContainer" style="display: none">
+                                <div class="form-group row">
+                                    <label class="col-sm-8 col-form-label">Užmokestis "į rankas"</label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control js-netPayAmountAuthor" placeholder="">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">&euro;</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-8">Dirbantis autorius<small class="form-text text-muted">Autorius laikomas dirbančiu, jeigu yra susijęs darbo santykiais su tuo pačiu darbdaviu su kuriuo sudaroma autorinė sutartis.</small></div>
+                                    <div class="col-sm-4">
+                                        <div class="custom-control custom-checkbox">
+                                            <input class="custom-control-input js-workingAuthor" id="bruto-workingAuthor" type="checkbox">
+                                            <label class="custom-control-label" for="bruto-workingAuthor"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <h4>Darbuotojo ir/arba Autoriaus mokesčiai</h4>
+                            <table class="table js-employeeTaxes">
+                                <tbody>
+                                    <tr>
+                                        <td>Neapmokestinamas pajamų dydis (NPD)</td>
+                                        <td class="text-right js-taxExemptIncome"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Gyventojų pajamų mokestis (GPM)</td>
+                                        <td class="text-right js-incomeTax"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Privalomasis sveikatos draudimas (PSD)</td>
+                                        <td class="text-right js-healthInsuranceTax"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Valstybinis socialinis draudimas (VSD)</td>
+                                        <td class="text-right js-socialInsuranceTax"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>II pakopos pensijų fondas</td>
+                                        <td class="text-right js-tier2PensionTax"></td>
+                                    </tr>
+                                    <tr class="table-primary">
+                                        <td>Užmokestis "ant popieriaus"</td>
+                                        <td class="text-right js-grossPayAmount"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h4>Darbdavio ir/arba Užsakovo mokesčiai</h4>
+                            <table class="table js-employerTaxes">
+                                <tbody>
+                                    <tr>
+                                        <td>Sodra. (VSD + PSD)</td>
+                                        <td class="text-right js-socialAndHealthInsuranceTax"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Įmokos į garantinį fondą</td>
+                                        <td class="text-right js-guaranteeFundTax"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Įmoka į ilgalaikio darbo išmokų fondą</td>
+                                        <td class="text-right js-longTermUnemploymentFundTax"></td>
+                                    </tr>
+                                    <tr class="table-primary">
+                                        <td>Visa darbo vietos kaina</td>
+                                        <td class="text-right js-totalPayAmount"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                            <h4>Darbuotojo/Autoriaus mokesčiai</h4>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-8 col-form-label">Gyventojų pajamų mokestis (GPM), 15%</label>
+                                        <div class="col-sm-4">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control js-incomeTax-percent" value="15" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-8 col-form-label">Privalomasis sveikatos draudimas (PSD), 6%</label>
+                                        <div class="col-sm-4">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control js-healthInsuranceTax-percent" value="6" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-8 col-form-label">Valstybinis socialinis draudimas (VSD), 3%</label>
+                                        <div class="col-sm-4">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control js-socialInsuranceTax-percent" value="3" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-8 col-form-label">II pakopos pensijų fondas, 2%</label>
+                                        <div class="col-sm-4">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control js-tier2PensionTax-percent" value="2" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <h4>Darbdavio/Užsakovo mokesčiai</h4>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-8 col-form-label">Pensijų socialiniam draudimui, 22,3%</label>
+                                        <div class="col-sm-4">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control js-pensionTax-percent" value="22.3" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-8 col-form-label">Ligos socialiniam draudimui, 1,4%</label>
+                                        <div class="col-sm-4">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control js-sicknessTax-percent" value="1.4" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-8 col-form-label">Motinystės socialiniam draudimui, 2,2%</label>
+                                        <div class="col-sm-4">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control js-maternityTax-percent" value="2.2" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-8 col-form-label">Nedarbo socialiniam draudimui, 1,4%</label>
+                                        <div class="col-sm-4">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control js-unemploymentTax-percent" value="1.4" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-8 col-form-label">Nedarbo socialiniam draudimui, kai terminuota darbo sutartis, 2,8%</label>
+                                        <div class="col-sm-4">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control js-unemploymentTaxFixedTermContract-percent" value="2.8" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-8 col-form-label">Privalomajam sveikatos draudimui, 3%</label>
+                                        <div class="col-sm-4">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control js-healthInsuranceTaxEmployer-percent" value="3" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-8 col-form-label">Garantiniam fondui, 0,2%</label>
+                                        <div class="col-sm-4">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control js-guaranteeFundTax-percent" value="0.2" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-8 col-form-label">Ilgalaikio darbo išmokų fondui, 0,5%</label>
+                                        <div class="col-sm-4">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control js-longTermUnemploymentFundTax-percent" value="0.5" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-8 col-form-label">Nelaimingų atsitikimų darbe ir profesinių ligų socialiniam draudimui, 0,18%</label>
+                                        <div class="col-sm-4">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control js-accidentsAtWorkTax-percent" value="0.18" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="assets/vendor/js/jquery-3.2.1.min.js"></script>
+        <!-- Bootstrap tooltips -->
+        <script src="assets/vendor/js/popper.min.js"></script>
+        <!-- Bootstrap core JavaScript -->
+        <script src="assets/vendor/js/bootstrap.min.js"></script>
+        <!-- MDB core JavaScript -->
+        <script src="assets/vendor/js/mdb.min.js"></script>
+        <!-- App JavaScript -->
+        <script src="assets/app/js/app.js"></script>
+
+    </body>
+</html>
