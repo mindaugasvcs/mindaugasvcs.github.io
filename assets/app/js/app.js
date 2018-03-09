@@ -1,4 +1,4 @@
-var app = {
+ var app = {
     _grossMinMonthlyWage: 400,
     set grossMinMonthlyWage(value) {
         if (isNaN(value) || value < 0) {
@@ -156,7 +156,7 @@ var app = {
     },
 
     // Neapmokestinamas pajamų dydis (NPD)
-    taxExemptIncome: function(o) {
+    taxExemptIncome: function (o) {
         if (o.workCapacityGroup === 25) {
             return 450;
         } else if (o.workCapacityGroup === 55) {
@@ -171,21 +171,21 @@ var app = {
     },
     // "Darbuotojo/autoriaus" mokesčiai:
     // Gyventojų pajamų mokestis (GPM) - 15%
-    incomeTax: function(o) {
+    incomeTax: function (o) {
         if (o.grossPayAmount > app.taxExemptIncome(o)) {
             return (o.grossPayAmount - app.taxExemptIncome(o)) * (this.incomeTaxPercent / 100);
         } else {
             return 0;
         }
     },
-    incomeTaxAuthor: function(o) {
+    incomeTaxAuthor: function (o) {
         return o.grossPayAmountAuthor * (this.incomeTaxPercent / 100);
     },
     // Privalomasis sveikatos draudimas (PSD) - 6%
-    healthInsuranceTax: function(o) {
+    healthInsuranceTax: function (o) {
         return o.grossPayAmount * (this.healthInsuranceTaxPercent / 100);
     },
-    healthInsuranceTaxAuthor: function(o) {
+    healthInsuranceTaxAuthor: function (o) {
         if (o.workingAuthor) {
             return o.grossPayAmountAuthor * (this.healthInsuranceTaxPercent / 100);
         } else {
@@ -193,10 +193,10 @@ var app = {
         }
     },
     // Valstybinis socialinis draudimas (VSD) - 3%
-    socialInsuranceTax: function(o) {
+    socialInsuranceTax: function (o) {
         return o.grossPayAmount * (this.socialInsuranceTaxPercent / 100);
     },
-    socialInsuranceTaxAuthor: function(o) {
+    socialInsuranceTaxAuthor: function (o) {
         if (o.workingAuthor) {
             return o.grossPayAmountAuthor * (this.socialInsuranceTaxPercent / 100);
         } else {
@@ -204,13 +204,13 @@ var app = {
         }
     },
     // II pakopos pensijų fondas - 2%
-    tier2PensionTax: function(o) {
+    tier2PensionTax: function (o) {
         if (o.tier2PensionAccumulation) {
             return o.grossPayAmount * (this.tier2PensionTaxPercent / 100);
         }
         return 0;
     },
-    tier2PensionTaxAuthor: function(o) {
+    tier2PensionTaxAuthor: function (o) {
         if (o.tier2PensionAccumulation) {
             return o.grossPayAmountAuthor * (this.tier2PensionTaxPercent / 100);
         }
@@ -219,7 +219,7 @@ var app = {
     // "Darbdavio/užsakovo" mokesčiai:
     // Sodra. (VSD + PSD)
     // Nuo metų pradžios darbdaviams atsirado prievolė "Sodros" įmokas mokėti nuo MMA ir tuomet, kai darbuotojas uždirba mažiau.
-    socialAndHealthInsuranceTax: function(o) {
+    socialAndHealthInsuranceTax: function (o) {
         var amount, percent;
         if (o.grossPayAmount > 0 && o.grossPayAmount < this.grossMinMonthlyWage && !o.insuredElsewhere) {
             amount = this.grossMinMonthlyWage;
@@ -240,7 +240,7 @@ var app = {
         }
         return amount * (percent / 100);
     },
-    socialAndHealthInsuranceTaxAuthor: function(o) {
+    socialAndHealthInsuranceTaxAuthor: function (o) {
         var amount = 0, rate = 1;
         // Nedarbo draudimas – 1,4% (Sodra).
         // Nelaimingų atsitikimų darbe ir profesinių ligų draudimas (I, II, III, IV gr.) – 0,18%; 0,43%; 0,9%; 1,8% (Sodra).
@@ -261,11 +261,11 @@ var app = {
         return amount;
     },
     // Įmokos į garantinį fondą - 0,2%
-    guaranteeFundTax: function(o) {
+    guaranteeFundTax: function (o) {
         return o.grossPayAmount * (this.guaranteeFundTaxPercent / 100);
     },
     // Įmoka į ilgalaikio darbo išmokų fondą - 0,5%
-    longTermUnemploymentFundTax: function(o) {
+    longTermUnemploymentFundTax: function (o) {
         return o.grossPayAmount * (this.longTermUnemploymentFundTaxPercent / 100);
     },
 
@@ -405,10 +405,92 @@ var app = {
     currency: function (value) {
         return value.toLocaleString("lt-LT", {style: "currency", currency: "EUR", minimumFractionDigits: 2});
     },
+    loadSettings: function () {
+        if ("localStorage" in window && localStorage !== null) {
+            if ("incomeTaxPercent" in localStorage) this.incomeTaxPercent = parseFloat(localStorage.getItem("incomeTaxPercent"));
+            if ("healthInsuranceTaxPercent" in localStorage) this.healthInsuranceTaxPercent = parseFloat(localStorage.getItem("healthInsuranceTaxPercent"));
+            if ("socialInsuranceTaxPercent" in localStorage) this.socialInsuranceTaxPercent = parseFloat(localStorage.getItem("socialInsuranceTaxPercent"));
+            if ("tier2PensionTaxPercent" in localStorage) this.tier2PensionTaxPercent = parseFloat(localStorage.getItem("tier2PensionTaxPercent"));
+            if ("pensionTaxPercent" in localStorage) this.pensionTaxPercent = parseFloat(localStorage.getItem("pensionTaxPercent"));
+            if ("sicknessTaxPercent" in localStorage) this.sicknessTaxPercent = parseFloat(localStorage.getItem("sicknessTaxPercent"));
+            if ("maternityTaxPercent" in localStorage) this.maternityTaxPercent = parseFloat(localStorage.getItem("maternityTaxPercent"));
+            if ("unemploymentTaxPercent" in localStorage) this.unemploymentTaxPercent = parseFloat(localStorage.getItem("unemploymentTaxPercent"));
+            if ("unemploymentTaxFixedTermContractPercent" in localStorage) this.unemploymentTaxFixedTermContractPercent = parseFloat(localStorage.getItem("unemploymentTaxFixedTermContractPercent"));
+            if ("healthInsuranceTaxEmployerPercent" in localStorage) this.healthInsuranceTaxEmployerPercent = parseFloat(localStorage.getItem("healthInsuranceTaxEmployerPercent"));
+            if ("guaranteeFundTaxPercent" in localStorage) this.guaranteeFundTaxPercent = parseFloat(localStorage.getItem("guaranteeFundTaxPercent"));
+            if ("longTermUnemploymentFundTaxPercent" in localStorage) this.longTermUnemploymentFundTaxPercent = parseFloat(localStorage.getItem("longTermUnemploymentFundTaxPercent"));
+            if ("accidentsAtWorkTaxPercent" in localStorage) this.accidentsAtWorkTaxPercent = parseFloat(localStorage.getItem("accidentsAtWorkTaxPercent"));
+        }
+    },
+    saveSettings: function () {
+        if ("localStorage" in window && localStorage !== null) {
+            localStorage.setItem("incomeTaxPercent", this.incomeTaxPercent);
+            localStorage.setItem("healthInsuranceTaxPercent", this.healthInsuranceTaxPercent);
+            localStorage.setItem("socialInsuranceTaxPercent", this.socialInsuranceTaxPercent);
+            localStorage.setItem("tier2PensionTaxPercent", this.tier2PensionTaxPercent);
+            localStorage.setItem("pensionTaxPercent", this.pensionTaxPercent);
+            localStorage.setItem("sicknessTaxPercent", this.sicknessTaxPercent);
+            localStorage.setItem("maternityTaxPercent", this.maternityTaxPercent);
+            localStorage.setItem("unemploymentTaxPercent", this.unemploymentTaxPercent);
+            localStorage.setItem("unemploymentTaxFixedTermContractPercent", this.unemploymentTaxFixedTermContractPercent);
+            localStorage.setItem("healthInsuranceTaxEmployerPercent", this.healthInsuranceTaxEmployerPercent);
+            localStorage.setItem("guaranteeFundTaxPercent", this.guaranteeFundTaxPercent);
+            localStorage.setItem("longTermUnemploymentFundTaxPercent", this.longTermUnemploymentFundTaxPercent);
+            localStorage.setItem("accidentsAtWorkTaxPercent", this.accidentsAtWorkTaxPercent);
+        }
+    },
+    initChart: function (o, id) {
+        o.chart = new Chart(id, {
+            type: "pie",
+            data: {
+                labels: ["Suma 'į rankas'", "'Darbuotojo' mokesčiai", "'Darbdavio' mokesčiai"],
+                datasets: [
+                    {
+                        data: [0, 0, 0],
+                        backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C"],
+                        hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870"]
+                    }
+                ]
+            },
+            options: {
+                responsive: true
+            }    
+        });
+    },
+    updateChart: function (o) {
+        if (o.chart) {
+            o.chart.data.datasets[0].data =
+            [
+                (o.grossPayAmount + o.grossPayAmountAuthor).toFixed(2),
+                (this.incomeTax(o) + this.incomeTaxAuthor(o) + this.healthInsuranceTax(o) + this.healthInsuranceTaxAuthor(o) + this.socialInsuranceTax(o) + this.socialInsuranceTaxAuthor(o) + this.tier2PensionTax(o) + this.tier2PensionTaxAuthor(o)).toFixed(2),
+                (this.socialAndHealthInsuranceTax(o) + this.socialAndHealthInsuranceTaxAuthor(o) + this.guaranteeFundTax(o) + this.longTermUnemploymentFundTax(o)).toFixed(2)
+            ];
+            o.chart.update();
+        }
+    }
 };
 
 
 $(document).ready(function() {
+    app.initChart(app.neto, "neto-pie-chart");
+    app.initChart(app.bruto, "bruto-pie-chart");
+
+    app.loadSettings();
+    $("#settings .js-incomeTax-percent:first").val(app.incomeTaxPercent);
+    $("#settings .js-healthInsuranceTax-percent:first").val(app.healthInsuranceTaxPercent);
+    $("#settings .js-socialInsuranceTax-percent:first").val(app.socialInsuranceTaxPercent);
+    $("#settings .js-tier2PensionTax-percent:first").val(app.tier2PensionTaxPercent);
+    $("#settings .js-pensionTax-percent:first").val(app.pensionTaxPercent);
+    $("#settings .js-sicknessTax-percent:first").val(app.sicknessTaxPercent);
+    $("#settings .js-maternityTax-percent:first").val(app.maternityTaxPercent);
+    $("#settings .js-unemploymentTax-percent:first").val(app.unemploymentTaxPercent);
+    $("#settings .js-unemploymentTaxFixedTermContract-percent:first").val(app.unemploymentTaxFixedTermContractPercent);
+    $("#settings .js-healthInsuranceTaxEmployer-percent:first").val(app.healthInsuranceTaxEmployerPercent);
+    $("#settings .js-guaranteeFundTax-percent:first").val(app.guaranteeFundTaxPercent);
+    $("#settings .js-longTermUnemploymentFundTax-percent:first").val(app.longTermUnemploymentFundTaxPercent);
+    $("#settings .js-accidentsAtWorkTax-percent:first").val(app.accidentsAtWorkTaxPercent);
+
+
     $("#neto .js-calculateAuthorContractsTaxes:first").prop("checked", false);
     $("#neto .js-grossPayAmountAuthor:first").val(0);
     $("#neto .js-calculateAuthorContractsTaxes:first").on("change", function() {
@@ -432,6 +514,7 @@ $(document).ready(function() {
         app.neto.grossPayAmountAuthor = parseFloat($("#neto .js-grossPayAmountAuthor:first").val().replace(",","."));
         app.neto.workingAuthor = $("#neto .js-workingAuthor:first").is(":checked");
         app.neto.updateResult();
+        app.updateChart(app.neto);
     });
 
 
@@ -458,6 +541,7 @@ $(document).ready(function() {
         app.bruto.netPayAmountAuthor = parseFloat($("#bruto .js-netPayAmountAuthor:first").val().replace(",","."));
         app.bruto.workingAuthor = $("#bruto .js-workingAuthor:first").is(":checked");
         app.bruto.updateResult();
+        app.updateChart(app.bruto);
     });
 
 
@@ -477,7 +561,10 @@ $(document).ready(function() {
         app.longTermUnemploymentFundTaxPercent = parseFloat($("#settings .js-longTermUnemploymentFundTax-percent:first").val().replace(",","."));
         app.accidentsAtWorkTaxPercent = parseFloat($("#settings .js-accidentsAtWorkTax-percent:first").val().replace(",","."));
 
+        app.saveSettings();
         app.neto.updateResult();
         app.bruto.updateResult();
+        app.updateChart(app.neto);
+        app.updateChart(app.bruto);
     });
 });

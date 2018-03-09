@@ -171,6 +171,7 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <canvas id="neto-pie-chart"></canvas>
                         </div>
 
                         <div class="tab-pane fade" id="bruto" role="tabpanel" aria-labelledby="bruto-tab">
@@ -314,6 +315,7 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <canvas id="bruto-pie-chart"></canvas>
                         </div>
 
                         <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
@@ -324,7 +326,7 @@
                                         <label class="col-sm-8 col-form-label">Gyventojų pajamų mokestis (GPM), 15%</label>
                                         <div class="col-sm-4">
                                             <div class="input-group">
-                                                <input type="text" class="form-control js-incomeTax-percent" value="15" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
+                                                <input type="text" class="form-control js-incomeTax-percent" value="" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">%</span>
                                                 </div>
@@ -337,7 +339,7 @@
                                         <label class="col-sm-8 col-form-label">Privalomasis sveikatos draudimas (PSD), 6%</label>
                                         <div class="col-sm-4">
                                             <div class="input-group">
-                                                <input type="text" class="form-control js-healthInsuranceTax-percent" value="6" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
+                                                <input type="text" class="form-control js-healthInsuranceTax-percent" value="" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">%</span>
                                                 </div>
@@ -352,7 +354,7 @@
                                         <label class="col-sm-8 col-form-label">Valstybinis socialinis draudimas (VSD), 3%</label>
                                         <div class="col-sm-4">
                                             <div class="input-group">
-                                                <input type="text" class="form-control js-socialInsuranceTax-percent" value="3" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
+                                                <input type="text" class="form-control js-socialInsuranceTax-percent" value="" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">%</span>
                                                 </div>
@@ -365,7 +367,7 @@
                                         <label class="col-sm-8 col-form-label">II pakopos pensijų fondas, 2%</label>
                                         <div class="col-sm-4">
                                             <div class="input-group">
-                                                <input type="text" class="form-control js-tier2PensionTax-percent" value="2" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
+                                                <input type="text" class="form-control js-tier2PensionTax-percent" value="" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">%</span>
                                                 </div>
@@ -382,7 +384,7 @@
                                         <label class="col-sm-8 col-form-label">Pensijų socialiniam draudimui, 22,3%</label>
                                         <div class="col-sm-4">
                                             <div class="input-group">
-                                                <input type="text" class="form-control js-pensionTax-percent" value="22.3" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
+                                                <input type="text" class="form-control js-pensionTax-percent" value="" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">%</span>
                                                 </div>
@@ -395,7 +397,7 @@
                                         <label class="col-sm-8 col-form-label">Ligos socialiniam draudimui, 1,4%</label>
                                         <div class="col-sm-4">
                                             <div class="input-group">
-                                                <input type="text" class="form-control js-sicknessTax-percent" value="1.4" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
+                                                <input type="text" class="form-control js-sicknessTax-percent" value="" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">%</span>
                                                 </div>
@@ -410,7 +412,7 @@
                                         <label class="col-sm-8 col-form-label">Motinystės socialiniam draudimui, 2,2%</label>
                                         <div class="col-sm-4">
                                             <div class="input-group">
-                                                <input type="text" class="form-control js-maternityTax-percent" value="2.2" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
+                                                <input type="text" class="form-control js-maternityTax-percent" value="" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">%</span>
                                                 </div>
@@ -423,7 +425,7 @@
                                         <label class="col-sm-8 col-form-label">Nedarbo socialiniam draudimui, 1,4%</label>
                                         <div class="col-sm-4">
                                             <div class="input-group">
-                                                <input type="text" class="form-control js-unemploymentTax-percent" value="1.4" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
+                                                <input type="text" class="form-control js-unemploymentTax-percent" value="" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">%</span>
                                                 </div>
@@ -438,7 +440,7 @@
                                         <label class="col-sm-8 col-form-label">Nedarbo socialiniam draudimui, kai terminuota darbo sutartis, 2,8%</label>
                                         <div class="col-sm-4">
                                             <div class="input-group">
-                                                <input type="text" class="form-control js-unemploymentTaxFixedTermContract-percent" value="2.8" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
+                                                <input type="text" class="form-control js-unemploymentTaxFixedTermContract-percent" value="" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">%</span>
                                                 </div>
@@ -453,7 +455,7 @@
                                         <label class="col-sm-8 col-form-label">Privalomajam sveikatos draudimui, 3%</label>
                                         <div class="col-sm-4">
                                             <div class="input-group">
-                                                <input type="text" class="form-control js-healthInsuranceTaxEmployer-percent" value="3" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
+                                                <input type="text" class="form-control js-healthInsuranceTaxEmployer-percent" value="" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">%</span>
                                                 </div>
@@ -466,7 +468,7 @@
                                         <label class="col-sm-8 col-form-label">Garantiniam fondui, 0,2%</label>
                                         <div class="col-sm-4">
                                             <div class="input-group">
-                                                <input type="text" class="form-control js-guaranteeFundTax-percent" value="0.2" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
+                                                <input type="text" class="form-control js-guaranteeFundTax-percent" value="" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">%</span>
                                                 </div>
@@ -481,7 +483,7 @@
                                         <label class="col-sm-8 col-form-label">Ilgalaikio darbo išmokų fondui, 0,5%</label>
                                         <div class="col-sm-4">
                                             <div class="input-group">
-                                                <input type="text" class="form-control js-longTermUnemploymentFundTax-percent" value="0.5" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
+                                                <input type="text" class="form-control js-longTermUnemploymentFundTax-percent" value="" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">%</span>
                                                 </div>
@@ -494,7 +496,7 @@
                                         <label class="col-sm-8 col-form-label">Nelaimingų atsitikimų darbe ir profesinių ligų socialiniam draudimui, 0,18%</label>
                                         <div class="col-sm-4">
                                             <div class="input-group">
-                                                <input type="text" class="form-control js-accidentsAtWorkTax-percent" value="0.18" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
+                                                <input type="text" class="form-control js-accidentsAtWorkTax-percent" value="" placeholder="" pattern="\d{1,2}([\.,]\d{0,2})?" required>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">%</span>
                                                 </div>
@@ -515,8 +517,8 @@
         <script src="assets/vendor/js/popper.min.js"></script>
         <!-- Bootstrap core JavaScript -->
         <script src="assets/vendor/js/bootstrap.min.js"></script>
-        <!-- MDB core JavaScript -->
-        <script src="assets/vendor/js/mdb.min.js"></script>
+        <!-- Chartjs JavaScript -->
+        <script src="assets/vendor/js/Chart.min.js"></script>
         <!-- App JavaScript -->
         <script src="assets/app/js/app.js"></script>
 
